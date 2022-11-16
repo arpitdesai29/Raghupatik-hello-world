@@ -1,24 +1,59 @@
-pipeline{
+pipeline {
     agent any
-
-    stages {
-        stage('Checkout') {
-            steps {
-                echo 'Checkout' 
-                //checkout scm
+    stages{
+        stage('Build'){
+            steps{
+             echo 'Build'
+             //sh 'mvn clean package'
+            }
+        }
+        stage('Test'){
+            steps{
+              echo 'Test'
+              //sh 'mvn test'
+            }
+        }
+       
+        stage('Push to atrifactory'){
+            steps{
+                echo 'Build'
             }
         }
 
-        stage('Build') {
-            steps {
-                echo 'Build'
-                // script
-                //sh 'mvn clean install'           
+
+        stage('Deploy to Dev'){
+            steps{
+                 echo 'Deploy Dev'
+            }
+        }
+        stage('Deploy to QA'){
+            steps{
+                 echo 'Deploy QA'
             }
         }
         
+         stage('Deploy to Staging'){
+            steps{
+                echo 'Deploy Stage'
+            }
+        }
+         stage('Deploy to Prod'){
+            steps{
+               echo 'Deploy Prod'
+            } 
+        }
+
+        
     }
-}
-
-
-
+    post{
+            failure{
+                echo 'fail'
+            }
+            
+            success{
+                echo 'Success'
+            }
+            
+           
+        }
+} 
